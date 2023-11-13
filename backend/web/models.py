@@ -110,3 +110,8 @@ class Product(models.Model):
     expiry_date = models.DateField()  
     status = models.CharField(max_length=20)  
     
+class Cart(models.Model):
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20)  
+    report = models.TextField()

@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.generics import ListAPIView
-from .models import User, Company, Branch, Supplier, Brand, Category, Product
-from .serializers import UserRegistrationSerializer, CompanySerializer, BranchSerializer, SupplierSerializer, BrandSerializer, CategorySerializer, ProductSerializer, UserLoginSerializer
+from .models import User, Company, Branch, Supplier, Brand, Category, Product, Cart
+from .serializers import UserRegistrationSerializer, CompanySerializer, BranchSerializer, SupplierSerializer, BrandSerializer, CategorySerializer, ProductSerializer, CartSerializer, UserLoginSerializer, BranchPersonnelRegistrationSerializer
 from .serializers import UserSerializer, SuperAdminRegistrationSerializer, BranchAdminRegistrationSerializer
 
 from rest_framework.views import APIView
@@ -28,6 +28,19 @@ class BranchAdminRegistrationView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BranchPersonnelRegistrationView(APIView):
+    serializer_class = BranchPersonnelRegistrationSerializer
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # class BranchAdminRegistrationView(APIView):
 	
@@ -168,3 +181,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer

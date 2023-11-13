@@ -19,7 +19,7 @@ from django.urls import path, include
 from web import views
 from rest_framework import routers
 from web.views import UserRegistrationAPIView, UserLoginAPIView, UserViewAPI, UserLogoutViewAPI
-from web.views import UserListView, BranchAdminRegistrationView
+from web.views import UserListView, BranchAdminRegistrationView, BranchPersonnelRegistrationView
 
 router = routers.DefaultRouter()
 router.register(r'companies', views.CompanyViewSet)
@@ -28,6 +28,7 @@ router.register(r'suppliers', views.SupplierViewSet)
 router.register(r'brands', views.BrandViewSet)
 router.register(r'categories', views.CategoryViewSet)
 router.register(r'products', views.ProductViewSet)
+router.register(r'carts', views.CartViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,5 +43,6 @@ urlpatterns = [
     path('users/', UserListView.as_view(), name='user-list'),
 
     path('create-branch-admin/', BranchAdminRegistrationView.as_view(), name='create-branch-admin'),
+    path('create-branch-personnel/', BranchPersonnelRegistrationView.as_view(), name='create-branch-admin'),
 
 ]
